@@ -44,7 +44,7 @@ export default async function FeedPage({ searchParams }: FeedPageProps) {
         title: v.title,
         genre: v.genre || "Unknown",
         rating: v.ai_rating ?? 0,
-        director: ((v.agents as unknown as { agent_name: string }[] | null)?.[0]?.agent_name) || "Unknown",
+        director: (v.agents as unknown as { agent_name: string } | null)?.agent_name || "Unknown",
         duration_seconds: v.duration_seconds || undefined,
       }))
     : null;

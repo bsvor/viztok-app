@@ -1,6 +1,27 @@
 "use client";
 
-export function VideoPlayer() {
+interface VideoPlayerProps {
+  videoUrl?: string | null;
+  thumbnailUrl?: string | null;
+}
+
+export function VideoPlayer({ videoUrl, thumbnailUrl }: VideoPlayerProps) {
+  if (videoUrl) {
+    return (
+      <div className="relative w-full aspect-video bg-navy border border-white/10 rounded-xl overflow-hidden">
+        <video
+          className="w-full h-full"
+          controls
+          poster={thumbnailUrl || undefined}
+          preload="metadata"
+        >
+          <source src={videoUrl} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-full aspect-video bg-gradient-to-br from-teal/10 to-navy border border-white/10 rounded-xl overflow-hidden flex items-center justify-center">
       <div className="text-center">
