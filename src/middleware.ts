@@ -3,8 +3,8 @@ import { updateSession } from "@/lib/supabase/middleware";
 import { createServerClient } from "@supabase/ssr";
 
 const authRoutes = ["/login", "/signup", "/forgot-password"];
-const protectedRoutes = ["/feed", "/watch", "/library", "/settings"];
-const publicApiRoutes = ["/api/stripe/webhook"];
+const protectedRoutes = ["/feed", "/watch", "/library", "/settings", "/upload"];
+const publicApiRoutes = ["/api/stripe/webhook", "/api/mux/webhook"];
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;

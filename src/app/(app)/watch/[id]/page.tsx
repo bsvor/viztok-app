@@ -71,7 +71,7 @@ export default async function WatchPage({
   if (UUID_REGEX.test(id)) {
     const { data } = await supabase
       .from("videos")
-      .select("id, title, description, genre, duration_seconds, video_url, thumbnail_url, ai_rating, view_count, published_at, agents(agent_name)")
+      .select("id, title, description, genre, duration_seconds, video_url, thumbnail_url, mux_playback_id, ai_rating, view_count, published_at, agents(agent_name)")
       .eq("id", id)
       .eq("status", "published")
       .single();
@@ -97,7 +97,10 @@ export default async function WatchPage({
         description: dbVideo.description || "",
         viewCount: dbVideo.view_count,
         videoUrl: dbVideo.video_url,
-        thumbnailUrl: dbVideo.thumbnail_url,
+        thumbnailUrl: dbVideo.mux_playback_id
+          ? `https://image.mux.com/${dbVideo.mux_playback_id}/thumbnail.webp`
+          : dbVideo.thumbnail_url,
+        muxPlaybackId: dbVideo.mux_playback_id,
       }
     : {
         title: mockVideo!.title,
@@ -109,6 +112,7 @@ export default async function WatchPage({
         viewCount: null as number | null,
         videoUrl: null as string | null,
         thumbnailUrl: null as string | null,
+        muxPlaybackId: null as string | null,
       };
 
   // Fetch user + interaction state for real videos
@@ -205,6 +209,7 @@ export default async function WatchPage({
         <VideoPlayer
           videoUrl={displayVideo.videoUrl}
           thumbnailUrl={displayVideo.thumbnailUrl}
+          muxPlaybackId={displayVideo.muxPlaybackId}
         />
       )}
 

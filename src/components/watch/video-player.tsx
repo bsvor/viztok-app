@@ -1,11 +1,31 @@
 "use client";
 
+import MuxPlayer from "@mux/mux-player-react";
+
 interface VideoPlayerProps {
   videoUrl?: string | null;
   thumbnailUrl?: string | null;
+  muxPlaybackId?: string | null;
 }
 
-export function VideoPlayer({ videoUrl, thumbnailUrl }: VideoPlayerProps) {
+export function VideoPlayer({
+  videoUrl,
+  thumbnailUrl,
+  muxPlaybackId,
+}: VideoPlayerProps) {
+  if (muxPlaybackId) {
+    return (
+      <div className="relative w-full aspect-video bg-navy border border-white/10 rounded-xl overflow-hidden">
+        <MuxPlayer
+          playbackId={muxPlaybackId}
+          streamType="on-demand"
+          primaryColor="#00D4FF"
+          style={{ width: "100%", height: "100%" }}
+        />
+      </div>
+    );
+  }
+
   if (videoUrl) {
     return (
       <div className="relative w-full aspect-video bg-navy border border-white/10 rounded-xl overflow-hidden">
