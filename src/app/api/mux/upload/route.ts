@@ -60,6 +60,7 @@ export async function POST(request: NextRequest) {
 
   return NextResponse.json({
     uploadUrl: upload.url,
+    uploadId: upload.id,
     videoId: video.id,
   });
 }

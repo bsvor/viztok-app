@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import * as UpChunk from "@mux/upchunk";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -20,6 +21,7 @@ const GENRES = [
 ];
 
 export default function UploadPage() {
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [genre, setGenre] = useState("");
@@ -27,8 +29,51 @@ export default function UploadPage() {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [processing, setProcessing] = useState(false);
+  const [processingStatus, setProcessingStatus] = useState("");
+  const [ready, setReady] = useState(false);
+  const [videoId, setVideoId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const uploadIdRef = useRef<string | null>(null);
+
+  const pollStatus = useCallback(async () => {
+    if (!uploadIdRef.current) return;
+
+    const res = await fetch(
+      `/api/mux/status?uploadId=${uploadIdRef.current}`
+    );
+    const data = await res.json();
+
+    if (data.status === "ready") {
+      setProcessing(false);
+      setReady(true);
+      setProcessingStatus("");
+      return true;
+    } else if (data.status === "errored") {
+      setProcessing(false);
+      setError("Video processing failed. Please try again.");
+      setProcessingStatus("");
+      return true;
+    } else {
+      setProcessingStatus(
+        data.status === "preparing"
+          ? "Processing video..."
+          : "Waiting for upload to finish..."
+      );
+      return false;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!processing) return;
+
+    const interval = setInterval(async () => {
+      const done = await pollStatus();
+      if (done) clearInterval(interval);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [processing, pollStatus]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -48,7 +93,6 @@ export default function UploadPage() {
     setProgress(0);
 
     try {
-      // Get upload URL from our API
       const res = await fetch("/api/mux/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -61,7 +105,10 @@ export default function UploadPage() {
         throw new Error(data.error || "Failed to create upload");
       }
 
-      // Upload file to Mux via chunked upload
+      setVideoId(data.videoId);
+      // Extract upload ID from the upload URL path
+      uploadIdRef.current = data.uploadId;
+
       const upload = UpChunk.createUpload({
         endpoint: data.uploadUrl,
         file,
@@ -73,8 +120,9 @@ export default function UploadPage() {
       });
 
       upload.on("success", () => {
-        setSuccess(true);
         setUploading(false);
+        setProcessing(true);
+        setProcessingStatus("Waiting for upload to finish...");
       });
 
       upload.on("error", (detail: { detail: { message: string } }) => {
@@ -87,7 +135,7 @@ export default function UploadPage() {
     }
   }
 
-  if (success) {
+  if (ready) {
     return (
       <div className="max-w-2xl">
         <div className="mb-8">
@@ -112,25 +160,70 @@ export default function UploadPage() {
               </svg>
             </div>
             <h2 className="text-xl font-heading font-bold mb-2">
-              Upload Complete
+              Video Published
             </h2>
             <p className="text-light/50 text-sm mb-6">
-              Your video is being processed. It will appear on the feed once
-              ready — this usually takes a few minutes.
+              Your video is live and ready to watch on the feed.
             </p>
-            <Button
-              onClick={() => {
-                setSuccess(false);
-                setTitle("");
-                setDescription("");
-                setGenre("");
-                setFile(null);
-                setProgress(0);
-                if (fileInputRef.current) fileInputRef.current.value = "";
-              }}
-            >
-              Upload Another
-            </Button>
+            <div className="flex gap-3 justify-center">
+              {videoId && (
+                <Button onClick={() => router.push(`/watch/${videoId}`)}>
+                  Watch Now
+                </Button>
+              )}
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  setReady(false);
+                  setTitle("");
+                  setDescription("");
+                  setGenre("");
+                  setFile(null);
+                  setProgress(0);
+                  setVideoId(null);
+                  uploadIdRef.current = null;
+                  if (fileInputRef.current) fileInputRef.current.value = "";
+                }}
+              >
+                Upload Another
+              </Button>
+            </div>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  if (processing) {
+    return (
+      <div className="max-w-2xl">
+        <div className="mb-8">
+          <h1 className="text-3xl font-heading font-bold mb-2">Upload</h1>
+          <p className="text-light/50">Share your AI-generated content</p>
+        </div>
+        <Card>
+          <div className="text-center py-8">
+            <div className="w-16 h-16 rounded-full bg-cyan/20 flex items-center justify-center mx-auto mb-4 animate-pulse">
+              <svg
+                className="w-8 h-8 text-cyan"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182M21.015 4.356v4.992"
+                />
+              </svg>
+            </div>
+            <h2 className="text-xl font-heading font-bold mb-2">
+              Processing Video
+            </h2>
+            <p className="text-light/50 text-sm">
+              {processingStatus || "Processing..."}
+            </p>
           </div>
         </Card>
       </div>

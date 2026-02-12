@@ -1,4 +1,5 @@
 import { Avatar } from "@/components/ui/avatar";
+import { Logo } from "@/components/ui/logo";
 
 interface TopBarProps {
   email?: string;
@@ -6,8 +7,11 @@ interface TopBarProps {
 
 export function TopBar({ email }: TopBarProps) {
   return (
-    <header className="sticky top-0 z-30 bg-navy/90 backdrop-blur-sm border-b border-white/10 px-6 py-4">
-      <div className="flex items-center justify-between">
+    <header className="sticky top-0 z-30 bg-navy/90 backdrop-blur-sm border-b border-white/10 px-4 md:px-6 py-3 md:py-4">
+      <div className="flex items-center justify-between gap-3">
+        <div className="md:hidden shrink-0">
+          <Logo />
+        </div>
         <div className="flex-1 max-w-md">
           <div className="relative">
             <svg
@@ -30,7 +34,7 @@ export function TopBar({ email }: TopBarProps) {
             />
           </div>
         </div>
-        <div className="flex items-center gap-3 ml-4">
+        <div className="flex items-center gap-3 shrink-0">
           <span className="text-sm text-light/50 hidden sm:block">{email}</span>
           <Avatar email={email} />
         </div>
