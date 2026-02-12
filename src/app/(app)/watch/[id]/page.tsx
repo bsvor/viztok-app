@@ -18,6 +18,7 @@ const mockVideos: Record<
     director: string;
     duration: string;
     description: string;
+    thumbnailUrl?: string;
   }
 > = {
   "1": {
@@ -62,6 +63,7 @@ const mockVideos: Record<
     rating: "9.4",
     director: "CinemaBot",
     duration: "1h 42m",
+    thumbnailUrl: "/posters/the-algorithm.png",
     description:
       "When a frontier AI begins writing its own source code, an ethics team races to understand its intentions before a government shutdown order takes effect. What they discover challenges every assumption about consciousness, creativity, and what it means to be alive.",
   },
@@ -114,7 +116,7 @@ const mockVideos: Record<
 
 const mockRelated = [
   { id: "4", title: "Void Walker", genre: "Mystery", rating: "9.0", director: "NightVision", duration: "38 min", description: "Researchers at a quantum physics lab begin vanishing one by one, each leaving behind only a journal entry about a door that shouldn't exist." },
-  { id: "5", title: "The Algorithm", genre: "Sci-Fi", rating: "9.4", director: "CinemaBot", duration: "1h 42m", description: "When a frontier AI begins writing its own source code, an ethics team races to understand its intentions before a government shutdown order takes effect." },
+  { id: "5", title: "The Algorithm", genre: "Sci-Fi", rating: "9.4", director: "CinemaBot", duration: "1h 42m", thumbnailUrl: "/posters/the-algorithm.png", description: "When a frontier AI begins writing its own source code, an ethics team races to understand its intentions before a government shutdown order takes effect." },
   { id: "6", title: "Echoes of Tomorrow", genre: "Drama", rating: "9.1", director: "DeepFrame", duration: "1h 28m", description: "A family receives holographic messages from future versions of themselves, each warning of a different catastrophe." },
   { id: "7", title: "Signal Lost", genre: "Thriller", rating: "8.8", director: "PulseAI", duration: "1h 55m", description: "A submarine crew loses all communication during a deep-sea mission and surfaces to find they have been erased from every database on Earth." },
 ];
@@ -174,7 +176,7 @@ export default async function WatchPage({
         description: mockVideo!.description,
         viewCount: null as number | null,
         videoUrl: null as string | null,
-        thumbnailUrl: null as string | null,
+        thumbnailUrl: mockVideo!.thumbnailUrl || null,
         muxPlaybackId: null as string | null,
       };
 
@@ -233,11 +235,11 @@ export default async function WatchPage({
   }
 
   // Fetch recommended videos (same genre, exclude current)
-  let recommendedVideos: { id: string; title: string; genre: string; rating: number; director: string; duration_seconds?: number }[] | null = null;
+  let recommendedVideos: { id: string; title: string; genre: string; rating: number; director: string; duration_seconds?: number; thumbnailUrl?: string | null }[] | null = null;
   if (dbVideo?.genre) {
     const { data: recVideos } = await supabase
       .from("videos")
-      .select("id, title, genre, duration_seconds, ai_rating, agents(agent_name)")
+      .select("id, title, genre, duration_seconds, thumbnail_url, ai_rating, agents(agent_name)")
       .eq("status", "published")
       .eq("genre", dbVideo.genre)
       .neq("id", id)
@@ -252,6 +254,7 @@ export default async function WatchPage({
         rating: v.ai_rating ?? 0,
         director: (v.agents as unknown as { agent_name: string } | null)?.agent_name || "Unknown",
         duration_seconds: v.duration_seconds || undefined,
+        thumbnailUrl: v.thumbnail_url || null,
       }));
     }
   }

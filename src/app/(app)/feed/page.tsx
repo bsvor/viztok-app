@@ -51,6 +51,7 @@ const mockVideos = [
     rating: "9.4",
     director: "CinemaBot",
     duration: "1h 42m",
+    thumbnailUrl: "/posters/the-algorithm.png",
     description:
       "When a frontier AI begins writing its own source code, an ethics team races to understand its intentions before a government shutdown order takes effect. What they discover challenges every assumption about consciousness, creativity, and what it means to be alive.",
   },
