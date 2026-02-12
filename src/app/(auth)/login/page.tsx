@@ -8,6 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 
+// Toggle to false to re-enable login
+const COMING_SOON = true;
+
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -34,6 +37,38 @@ export default function LoginPage() {
 
     router.push("/feed");
     router.refresh();
+  }
+
+  if (COMING_SOON) {
+    return (
+      <Card className="text-center">
+        <div className="w-16 h-16 rounded-full bg-cyan/10 flex items-center justify-center mx-auto mb-6">
+          <svg
+            className="w-8 h-8 text-cyan"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+            />
+          </svg>
+        </div>
+        <h1 className="text-2xl font-heading font-bold mb-3">Coming Soon</h1>
+        <p className="text-light/50 text-sm mb-6 max-w-xs mx-auto">
+          Viztok is launching soon. Sign up for the waitlist to be the first to know when we go live.
+        </p>
+        <a
+          href="https://viztok.com"
+          className="text-cyan text-sm hover:underline"
+        >
+          Back to viztok.com
+        </a>
+      </Card>
+    );
   }
 
   return (
