@@ -3,9 +3,11 @@ import { notFound } from "next/navigation";
 import { VideoPlayer } from "@/components/watch/video-player";
 import { VideoInfo } from "@/components/watch/video-info";
 import { InteractionButtons } from "@/components/watch/interaction-buttons";
+import { UpgradePrompt } from "@/components/subscription/upgrade-prompt";
 import { VideoCard } from "@/components/feed/video-card";
 import { VideoGrid } from "@/components/feed/video-grid";
 import { formatDuration } from "@/components/feed/video-card";
+import { getSubscription, isSubscribed, checkViewLimit, recordView } from "@/lib/subscription";
 
 const mockVideos: Record<
   string,
@@ -134,6 +136,35 @@ export default async function WatchPage({
     isInWatchlist = !!watchlistEntry;
   }
 
+  // Subscription gate for real videos
+  let viewLimitReached = false;
+  let viewsUsed = 0;
+  let viewLimit = 1;
+
+  if (user && dbVideo) {
+    const profile = await getSubscription(supabase, user.id);
+    if (!isSubscribed(profile)) {
+      const viewCheck = await checkViewLimit(supabase, user.id);
+      viewsUsed = viewCheck.viewsUsed;
+      viewLimit = viewCheck.limit;
+
+      // Check if this specific video was already viewed (rewatching is free)
+      const { data: existingView } = await supabase
+        .from("video_views")
+        .select("id")
+        .eq("user_id", user.id)
+        .eq("video_id", id)
+        .maybeSingle();
+
+      if (!existingView && !viewCheck.allowed) {
+        viewLimitReached = true;
+      } else if (!existingView) {
+        // Record new view
+        await recordView(supabase, user.id, id);
+      }
+    }
+  }
+
   // Fetch recommended videos (same genre, exclude current)
   let recommendedVideos: { id: string; title: string; genre: string; rating: number; director: string; duration_seconds?: number }[] | null = null;
   if (dbVideo?.genre) {
@@ -168,10 +199,14 @@ export default async function WatchPage({
         </div>
       )}
 
-      <VideoPlayer
-        videoUrl={displayVideo.videoUrl}
-        thumbnailUrl={displayVideo.thumbnailUrl}
-      />
+      {viewLimitReached ? (
+        <UpgradePrompt viewsUsed={viewsUsed} limit={viewLimit} />
+      ) : (
+        <VideoPlayer
+          videoUrl={displayVideo.videoUrl}
+          thumbnailUrl={displayVideo.thumbnailUrl}
+        />
+      )}
 
       <div className="flex items-start gap-6">
         <VideoInfo

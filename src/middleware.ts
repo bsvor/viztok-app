@@ -4,8 +4,16 @@ import { createServerClient } from "@supabase/ssr";
 
 const authRoutes = ["/login", "/signup", "/forgot-password"];
 const protectedRoutes = ["/feed", "/watch", "/library", "/settings"];
+const publicApiRoutes = ["/api/stripe/webhook"];
 
 export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  // Skip auth for public API routes (e.g., Stripe webhooks)
+  if (publicApiRoutes.some((route) => pathname.startsWith(route))) {
+    return NextResponse.next();
+  }
+
   const response = await updateSession(request);
 
   const supabase = createServerClient(
@@ -24,8 +32,6 @@ export async function middleware(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  const pathname = request.nextUrl.pathname;
 
   // Redirect unauthenticated users away from protected routes
   if (!user && protectedRoutes.some((route) => pathname.startsWith(route))) {
