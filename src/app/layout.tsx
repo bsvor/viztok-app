@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     description:
       "The streaming platform for AI-generated short-form TV shows, movies, and feature-length films.",
   },
-  metadataBase: new URL("https://viztok.tv"),
+  metadataBase: new URL("https://app.viztok.com"),
 };
 
 export default function RootLayout({
