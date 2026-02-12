@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" width="400" height="600">
+  <defs>
+    <linearGradient id="ocean" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0D1B2A"/>
+      <stop offset="40%" stop-color="#0a1825"/>
+      <stop offset="100%" stop-color="#020810"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+    <filter id="deepglow">
+      <feGaussianBlur stdDeviation="15"/>
+    </filter>
+  </defs>
+  <!-- Deep ocean background -->
+  <rect width="400" height="600" fill="url(#ocean)"/>
+  <!-- Water caustic light patterns -->
+  <g fill="#114466" opacity="0.06" filter="url(#deepglow)">
+    <ellipse cx="100" cy="100" rx="80" ry="30"/>
+    <ellipse cx="300" cy="60" rx="60" ry="25"/>
+    <ellipse cx="200" cy="150" rx="100" ry="20"/>
+  </g>
+  <!-- Depth pressure lines -->
+  <g stroke="#224466" stroke-width="0.3" opacity="0.15">
+    <line x1="0" y1="80" x2="400" y2="80"/>
+    <line x1="0" y1="180" x2="400" y2="180"/>
+    <line x1="0" y1="300" x2="400" y2="300"/>
+    <line x1="0" y1="440" x2="400" y2="440"/>
+  </g>
+  <!-- Submarine silhouette -->
+  <g transform="translate(80,250)" fill="#0a1520" opacity="0.85">
+    <ellipse cx="120" cy="30" rx="120" ry="30"/>
+    <!-- Conning tower -->
+    <rect x="100" y="0" width="30" height="20" rx="3"/>
+    <rect x="108" y="-10" width="4" height="15"/>
+    <!-- Propeller -->
+    <ellipse cx="240" cy="30" rx="5" ry="15" opacity="0.6"/>
+  </g>
+  <!-- Broken signal waves from submarine -->
+  <g stroke="#cc2222" fill="none" opacity="0.2">
+    <path d="M200,240 Q210,230 220,240" stroke-width="1.5" stroke-dasharray="3,4"/>
+    <path d="M195,230 Q210,215 225,230" stroke-width="1" stroke-dasharray="2,5" opacity="0.15"/>
+    <path d="M190,220 Q210,200 230,220" stroke-width="0.8" stroke-dasharray="2,6" opacity="0.1"/>
+  </g>
+  <!-- X over signal - "lost" -->
+  <g stroke="#cc2222" stroke-width="1" opacity="0.2">
+    <line x1="190" y1="215" x2="225" y2="245"/>
+    <line x1="225" y1="215" x2="190" y2="245"/>
+  </g>
+  <!-- Sonar ping rings -->
+  <g stroke="#225588" fill="none" opacity="0.1">
+    <circle cx="200" cy="280" r="40" stroke-width="1"/>
+    <circle cx="200" cy="280" r="80" stroke-width="0.8"/>
+    <circle cx="200" cy="280" r="130" stroke-width="0.5"/>
+    <circle cx="200" cy="280" r="190" stroke-width="0.3"/>
+  </g>
+  <!-- Bubbles rising -->
+  <g fill="white" opacity="0.08">
+    <circle cx="150" cy="310" r="3"/>
+    <circle cx="160" cy="340" r="2"/>
+    <circle cx="145" cy="370" r="4"/>
+    <circle cx="155" cy="400" r="2.5"/>
+    <circle cx="240" cy="320" r="2"/>
+    <circle cx="250" cy="360" r="3"/>
+    <circle cx="235" cy="395" r="2"/>
+  </g>
+  <!-- Surface hint at top -->
+  <rect x="0" y="0" width="400" height="3" fill="#336699" opacity="0.15"/>
+  <!-- Database/identity fragments dissolving -->
+  <g fill="#224466" opacity="0.08" font-family="monospace" font-size="7">
+    <text x="30" y="450">ID: ████████</text>
+    <text x="240" y="470">NAME: ██████</text>
+    <text x="80" y="500">RANK: ████</text>
+    <text x="260" y="510">STATUS: ERASED</text>
+  </g>
+  <!-- Deep sea particles -->
+  <g fill="#336699" opacity="0.15">
+    <circle cx="40" cy="350" r="1"/>
+    <circle cx="360" cy="400" r="1.5"/>
+    <circle cx="80" cy="480" r="1"/>
+    <circle cx="320" cy="520" r="1.2"/>
+    <circle cx="50" cy="550" r="0.8"/>
+    <circle cx="350" cy="560" r="1"/>
+  </g>
+</svg>

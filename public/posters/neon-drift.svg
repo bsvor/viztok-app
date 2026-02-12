@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" width="400" height="600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0D1B2A"/>
+      <stop offset="50%" stop-color="#0891B2"/>
+      <stop offset="100%" stop-color="#0D1B2A"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#00D4FF" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#00D4FF" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="blur1">
+      <feGaussianBlur stdDeviation="20"/>
+    </filter>
+    <filter id="blur2">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="400" height="600" fill="#0D1B2A"/>
+  <!-- City silhouette gradient -->
+  <rect width="400" height="600" fill="url(#bg)" opacity="0.7"/>
+  <!-- Rain effect lines -->
+  <g opacity="0.15" stroke="#00D4FF" stroke-width="0.5">
+    <line x1="50" y1="0" x2="45" y2="600"/>
+    <line x1="120" y1="0" x2="115" y2="600"/>
+    <line x1="180" y1="0" x2="175" y2="600"/>
+    <line x1="240" y1="0" x2="237" y2="600"/>
+    <line x1="310" y1="0" x2="306" y2="600"/>
+    <line x1="370" y1="0" x2="367" y2="600"/>
+    <line x1="85" y1="0" x2="82" y2="600"/>
+    <line x1="155" y1="0" x2="150" y2="600"/>
+    <line x1="270" y1="0" x2="265" y2="600"/>
+    <line x1="340" y1="0" x2="336" y2="600"/>
+    <line x1="30" y1="0" x2="26" y2="600"/>
+    <line x1="200" y1="0" x2="196" y2="600"/>
+  </g>
+  <!-- Neon glow center -->
+  <ellipse cx="200" cy="250" rx="180" ry="120" fill="#00D4FF" opacity="0.08" filter="url(#blur1)"/>
+  <!-- Cityscape silhouettes -->
+  <g fill="#0a1520" opacity="0.9">
+    <rect x="0" y="380" width="40" height="220"/>
+    <rect x="45" y="350" width="30" height="250"/>
+    <rect x="80" y="400" width="50" height="200"/>
+    <rect x="140" y="320" width="35" height="280"/>
+    <rect x="180" y="360" width="45" height="240"/>
+    <rect x="230" y="300" width="40" height="300"/>
+    <rect x="275" y="370" width="55" height="230"/>
+    <rect x="335" y="340" width="30" height="260"/>
+    <rect x="370" y="390" width="30" height="210"/>
+  </g>
+  <!-- Building windows -->
+  <g fill="#00D4FF" opacity="0.3">
+    <rect x="10" y="400" width="3" height="3"/>
+    <rect x="20" y="420" width="3" height="3"/>
+    <rect x="10" y="440" width="3" height="3"/>
+    <rect x="25" y="460" width="3" height="3"/>
+    <rect x="55" y="370" width="3" height="3"/>
+    <rect x="60" y="390" width="3" height="3"/>
+    <rect x="55" y="410" width="3" height="3"/>
+    <rect x="150" y="340" width="3" height="3"/>
+    <rect x="160" y="360" width="3" height="3"/>
+    <rect x="150" y="380" width="3" height="3"/>
+    <rect x="240" y="320" width="3" height="3"/>
+    <rect x="250" y="340" width="3" height="3"/>
+    <rect x="240" y="360" width="3" height="3"/>
+    <rect x="345" y="360" width="3" height="3"/>
+    <rect x="350" y="380" width="3" height="3"/>
+  </g>
+  <!-- Circuit/implant motif -->
+  <g stroke="#00D4FF" stroke-width="1.5" fill="none" opacity="0.25">
+    <circle cx="200" cy="220" r="40"/>
+    <circle cx="200" cy="220" r="25"/>
+    <circle cx="200" cy="220" r="8" fill="#00D4FF" opacity="0.4"/>
+    <line x1="200" y1="180" x2="200" y2="150"/>
+    <line x1="200" y1="260" x2="200" y2="290"/>
+    <line x1="160" y1="220" x2="130" y2="220"/>
+    <line x1="240" y1="220" x2="270" y2="220"/>
+    <line x1="172" y1="192" x2="152" y2="172"/>
+    <line x1="228" y1="248" x2="248" y2="268"/>
+    <line x1="228" y1="192" x2="248" y2="172"/>
+    <line x1="172" y1="248" x2="152" y2="268"/>
+  </g>
+  <!-- Neon horizontal line -->
+  <rect x="0" y="480" width="400" height="2" fill="#00D4FF" opacity="0.4"/>
+  <rect x="0" y="480" width="400" height="2" fill="#00D4FF" opacity="0.15" filter="url(#blur2)"/>
+</svg>

@@ -11,6 +11,7 @@ const mockVideos = [
     rating: "9.2",
     director: "AIDirector_42",
     duration: "32 min",
+    thumbnailUrl: "/posters/neon-drift.svg",
     description:
       "In a rain-soaked megacity, a rogue courier discovers her cybernetic implant is broadcasting a signal that could unravel the corporate oligarchy. With bounty hunters closing in and her own memories glitching, she must decide who to trust in a world where identity is code.",
   },
@@ -21,6 +22,7 @@ const mockVideos = [
     rating: "8.7",
     director: "StoryForge",
     duration: "45 min",
+    thumbnailUrl: "/posters/the-last-signal.svg",
     description:
       "A deep-space communications officer picks up an impossibly old transmission from beyond the known universe. As she decodes the message, she realizes it contains coordinates to Earth, sent from a civilization that vanished millions of years ago.",
   },
@@ -31,6 +33,7 @@ const mockVideos = [
     rating: "8.9",
     director: "DreamLens",
     duration: "28 min",
+    thumbnailUrl: "/posters/pixel-hearts.svg",
     description:
       "Two rival game developers meet anonymously in a virtual world they each helped build. As their avatars fall in love across digital landscapes, a merger threatens to reveal their real identities and force them to choose between ambition and connection.",
   },
@@ -41,6 +44,7 @@ const mockVideos = [
     rating: "9.0",
     director: "NightVision",
     duration: "38 min",
+    thumbnailUrl: "/posters/void-walker.svg",
     description:
       "Researchers at a quantum physics lab begin vanishing one by one, each leaving behind only a journal entry about a door that shouldn't exist. The lead investigator follows the clues into a space between dimensions where time folds in on itself.",
   },
@@ -62,6 +66,7 @@ const mockVideos = [
     rating: "9.1",
     director: "DeepFrame",
     duration: "1h 28m",
+    thumbnailUrl: "/posters/echoes-of-tomorrow.svg",
     description:
       "A family receives holographic messages from future versions of themselves, each warning of a different catastrophe. As the timelines diverge and the messages contradict each other, they must decide which future is worth fighting for.",
   },
@@ -72,6 +77,7 @@ const mockVideos = [
     rating: "8.8",
     director: "PulseAI",
     duration: "1h 55m",
+    thumbnailUrl: "/posters/signal-lost.svg",
     description:
       "A submarine crew loses all communication during a deep-sea mission and surfaces to find they have been erased from every database on Earth. With no identities and no allies, they uncover a conspiracy that reaches the highest levels of global intelligence.",
   },
@@ -82,6 +88,7 @@ const mockVideos = [
     rating: "9.3",
     director: "WorldBuilder",
     duration: "2h 10m",
+    thumbnailUrl: "/posters/the-dreaming-city.svg",
     description:
       "An architect discovers that her blueprints are manifesting as real places in a parallel dream dimension. When the city she designed begins pulling sleepers in permanently, she must enter the dream to confront the entity that has claimed her creation.",
   },
@@ -92,6 +99,7 @@ const mockVideos = [
     rating: "8.5",
     director: "RenderHouse",
     duration: "22 min",
+    thumbnailUrl: "/posters/chrome-sunset.svg",
     description:
       "A retired android bounty hunter is reactivated for one last job in a desert wasteland ruled by rogue machines. Armed with outdated hardware and fading memories of who she used to be, she rides into a showdown that will decide the fate of both species.",
   },
@@ -102,6 +110,7 @@ const mockVideos = [
     rating: "9.1",
     director: "LensAI",
     duration: "48 min",
+    thumbnailUrl: "/posters/quiet-machines.svg",
     description:
       "A contemplative documentary exploring the world's first AI-generated art gallery and the humans who curate it. Through intimate interviews and stunning visuals, it asks whether a machine can create beauty and what that means for the artists watching from the sidelines.",
   },

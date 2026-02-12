@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" width="400" height="600">
+  <defs>
+    <radialGradient id="space" cx="0.5" cy="0.4" r="0.7">
+      <stop offset="0%" stop-color="#1a0a0a"/>
+      <stop offset="60%" stop-color="#0D1B2A"/>
+      <stop offset="100%" stop-color="#050a12"/>
+    </radialGradient>
+    <radialGradient id="signal" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#ff3333" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#ff3333" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+    <filter id="bigblur">
+      <feGaussianBlur stdDeviation="25"/>
+    </filter>
+  </defs>
+  <!-- Deep space background -->
+  <rect width="400" height="600" fill="url(#space)"/>
+  <!-- Stars -->
+  <g fill="white">
+    <circle cx="45" cy="80" r="1" opacity="0.8"/>
+    <circle cx="120" cy="45" r="0.8" opacity="0.6"/>
+    <circle cx="300" cy="90" r="1.2" opacity="0.7"/>
+    <circle cx="350" cy="150" r="0.8" opacity="0.5"/>
+    <circle cx="80" cy="180" r="1" opacity="0.6"/>
+    <circle cx="250" cy="50" r="0.6" opacity="0.9"/>
+    <circle cx="180" cy="120" r="0.7" opacity="0.4"/>
+    <circle cx="60" cy="300" r="0.8" opacity="0.5"/>
+    <circle cx="340" cy="280" r="1" opacity="0.6"/>
+    <circle cx="150" cy="400" r="0.6" opacity="0.4"/>
+    <circle cx="290" cy="450" r="0.8" opacity="0.5"/>
+    <circle cx="30" cy="500" r="1" opacity="0.3"/>
+    <circle cx="370" cy="380" r="0.7" opacity="0.6"/>
+    <circle cx="200" cy="60" r="1.5" opacity="0.8"/>
+    <circle cx="100" cy="520" r="0.6" opacity="0.4"/>
+    <circle cx="320" cy="540" r="0.8" opacity="0.3"/>
+  </g>
+  <!-- Signal source - distant glow -->
+  <circle cx="200" cy="200" r="80" fill="url(#signal)" filter="url(#bigblur)"/>
+  <!-- Concentric signal waves -->
+  <g stroke="#cc2222" fill="none" opacity="0.3">
+    <circle cx="200" cy="200" r="20" stroke-width="2"/>
+    <circle cx="200" cy="200" r="50" stroke-width="1.5" opacity="0.25"/>
+    <circle cx="200" cy="200" r="85" stroke-width="1" opacity="0.2"/>
+    <circle cx="200" cy="200" r="125" stroke-width="0.8" opacity="0.15"/>
+    <circle cx="200" cy="200" r="170" stroke-width="0.6" opacity="0.1"/>
+    <circle cx="200" cy="200" r="220" stroke-width="0.4" opacity="0.07"/>
+  </g>
+  <!-- Signal source point -->
+  <circle cx="200" cy="200" r="4" fill="#ff4444" opacity="0.9"/>
+  <circle cx="200" cy="200" r="8" fill="#ff4444" opacity="0.3" filter="url(#glow)"/>
+  <!-- Satellite dish silhouette at bottom -->
+  <g fill="#0a1520" opacity="0.85">
+    <path d="M180,520 Q200,460 220,520 L215,520 Q200,470 185,520 Z"/>
+    <rect x="197" y="520" width="6" height="60"/>
+    <rect x="170" y="575" width="60" height="8" rx="3"/>
+  </g>
+  <!-- Data stream lines from signal to dish -->
+  <g stroke="#ff3333" stroke-width="0.5" opacity="0.15" stroke-dasharray="4,8">
+    <line x1="200" y1="210" x2="200" y2="460"/>
+    <line x1="195" y1="215" x2="190" y2="465"/>
+    <line x1="205" y1="215" x2="210" y2="465"/>
+  </g>
+  <!-- Nebula accent -->
+  <ellipse cx="100" cy="150" rx="60" ry="40" fill="#660022" opacity="0.15" filter="url(#bigblur)"/>
+  <ellipse cx="320" cy="350" rx="50" ry="35" fill="#440044" opacity="0.1" filter="url(#bigblur)"/>
+</svg>
