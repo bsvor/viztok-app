@@ -1,5 +1,7 @@
+import { createClient } from "@/lib/supabase/server";
 import { VideoCard } from "@/components/feed/video-card";
 import { VideoGrid } from "@/components/feed/video-grid";
+import { GenreFilter } from "@/components/feed/genre-filter";
 
 const mockVideos = [
   { id: "1", title: "Neon Drift", genre: "Sci-Fi", rating: "9.2", director: "AIDirector_42", duration: "32 min" },
@@ -14,7 +16,48 @@ const mockVideos = [
   { id: "10", title: "Quiet Machines", genre: "Documentary", rating: "9.1", director: "LensAI", duration: "48 min" },
 ];
 
-export default function FeedPage() {
+interface FeedPageProps {
+  searchParams: Promise<{ genre?: string }>;
+}
+
+export default async function FeedPage({ searchParams }: FeedPageProps) {
+  const { genre } = await searchParams;
+  const supabase = await createClient();
+
+  // Fetch published videos from Supabase, ordered by AI rating
+  let query = supabase
+    .from("videos")
+    .select("id, title, description, genre, duration_seconds, ai_rating, view_count, published_at, agents(agent_name)")
+    .eq("status", "published")
+    .order("ai_rating", { ascending: false });
+
+  if (genre && genre !== "All") {
+    query = query.eq("genre", genre);
+  }
+
+  const { data: dbVideos } = await query;
+
+  // Map DB videos to card props
+  const videos = dbVideos && dbVideos.length > 0
+    ? dbVideos.map((v) => ({
+        id: v.id,
+        title: v.title,
+        genre: v.genre || "Unknown",
+        rating: v.ai_rating ?? 0,
+        director: ((v.agents as unknown as { agent_name: string }[] | null)?.[0]?.agent_name) || "Unknown",
+        duration_seconds: v.duration_seconds || undefined,
+      }))
+    : null;
+
+  // Use mock data if DB is empty, with genre filtering
+  const displayVideos = videos || (
+    genre && genre !== "All"
+      ? mockVideos.filter((v) => v.genre === genre)
+      : mockVideos
+  );
+
+  const usingMockData = !videos;
+
   return (
     <div>
       <div className="mb-8">
@@ -23,26 +66,44 @@ export default function FeedPage() {
       </div>
 
       <div className="mb-8">
-        <h2 className="text-xl font-heading font-bold mb-4">
-          Trending <span className="text-cyan">Now</span>
-        </h2>
-        <VideoGrid>
-          {mockVideos.slice(0, 5).map((video) => (
-            <VideoCard key={video.id} {...video} />
-          ))}
-        </VideoGrid>
+        <GenreFilter />
       </div>
 
-      <div>
-        <h2 className="text-xl font-heading font-bold mb-4">
-          Recently <span className="text-cyan">Added</span>
-        </h2>
+      {usingMockData && (
+        <div className="mb-6 px-4 py-2.5 rounded-lg bg-cyan/5 border border-cyan/20 text-sm text-light/50">
+          Showing sample content. Real videos will appear here once directors start uploading.
+        </div>
+      )}
+
+      {displayVideos.length > 0 ? (
         <VideoGrid>
-          {mockVideos.slice(5).map((video) => (
+          {displayVideos.map((video) => (
             <VideoCard key={video.id} {...video} />
           ))}
         </VideoGrid>
-      </div>
+      ) : (
+        <div className="text-center py-16">
+          <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
+            <svg
+              className="w-8 h-8 text-light/30"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+              />
+            </svg>
+          </div>
+          <h3 className="text-lg font-heading font-bold mb-2">No Videos Found</h3>
+          <p className="text-light/40 text-sm">
+            No videos match this genre yet. Try a different filter.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
