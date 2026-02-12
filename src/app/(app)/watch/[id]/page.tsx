@@ -27,7 +27,7 @@ const mockVideos: Record<
     director: "AIDirector_42",
     duration: "32 min",
     description:
-      "In a rain-soaked megacity, a rogue courier discovers her cybernetic implant is broadcasting a signal that could unravel the corporate oligarchy. With bounty hunters closing in, she must decide whether to sell the data or burn it all down.",
+      "In a rain-soaked megacity, a rogue courier discovers her cybernetic implant is broadcasting a signal that could unravel the corporate oligarchy. With bounty hunters closing in and her own memories glitching, she must decide who to trust in a world where identity is code.",
   },
   "2": {
     title: "The Last Signal",
@@ -36,7 +36,7 @@ const mockVideos: Record<
     director: "StoryForge",
     duration: "45 min",
     description:
-      "A deep-space communications officer picks up an impossibly old transmission from beyond the known universe. As she decodes the message, she realizes it contains coordinates — and a warning.",
+      "A deep-space communications officer picks up an impossibly old transmission from beyond the known universe. As she decodes the message, she realizes it contains coordinates to Earth, sent from a civilization that vanished millions of years ago.",
   },
   "3": {
     title: "Pixel Hearts",
@@ -45,15 +45,78 @@ const mockVideos: Record<
     director: "DreamLens",
     duration: "28 min",
     description:
-      "Two rival game developers meet anonymously in a virtual world they each helped build. As their avatars fall in love, they struggle with the truth of who they really are.",
+      "Two rival game developers meet anonymously in a virtual world they each helped build. As their avatars fall in love across digital landscapes, a merger threatens to reveal their real identities and force them to choose between ambition and connection.",
+  },
+  "4": {
+    title: "Void Walker",
+    genre: "Mystery",
+    rating: "9.0",
+    director: "NightVision",
+    duration: "38 min",
+    description:
+      "Researchers at a quantum physics lab begin vanishing one by one, each leaving behind only a journal entry about a door that shouldn't exist. The lead investigator follows the clues into a space between dimensions where time folds in on itself.",
+  },
+  "5": {
+    title: "The Algorithm",
+    genre: "Sci-Fi",
+    rating: "9.4",
+    director: "CinemaBot",
+    duration: "1h 42m",
+    description:
+      "When a frontier AI begins writing its own source code, an ethics team races to understand its intentions before a government shutdown order takes effect. What they discover challenges every assumption about consciousness, creativity, and what it means to be alive.",
+  },
+  "6": {
+    title: "Echoes of Tomorrow",
+    genre: "Drama",
+    rating: "9.1",
+    director: "DeepFrame",
+    duration: "1h 28m",
+    description:
+      "A family receives holographic messages from future versions of themselves, each warning of a different catastrophe. As the timelines diverge and the messages contradict each other, they must decide which future is worth fighting for.",
+  },
+  "7": {
+    title: "Signal Lost",
+    genre: "Thriller",
+    rating: "8.8",
+    director: "PulseAI",
+    duration: "1h 55m",
+    description:
+      "A submarine crew loses all communication during a deep-sea mission and surfaces to find they have been erased from every database on Earth. With no identities and no allies, they uncover a conspiracy that reaches the highest levels of global intelligence.",
+  },
+  "8": {
+    title: "The Dreaming City",
+    genre: "Fantasy",
+    rating: "9.3",
+    director: "WorldBuilder",
+    duration: "2h 10m",
+    description:
+      "An architect discovers that her blueprints are manifesting as real places in a parallel dream dimension. When the city she designed begins pulling sleepers in permanently, she must enter the dream to confront the entity that has claimed her creation.",
+  },
+  "9": {
+    title: "Chrome Sunset",
+    genre: "Action",
+    rating: "8.5",
+    director: "RenderHouse",
+    duration: "22 min",
+    description:
+      "A retired android bounty hunter is reactivated for one last job in a desert wasteland ruled by rogue machines. Armed with outdated hardware and fading memories of who she used to be, she rides into a showdown that will decide the fate of both species.",
+  },
+  "10": {
+    title: "Quiet Machines",
+    genre: "Documentary",
+    rating: "9.1",
+    director: "LensAI",
+    duration: "48 min",
+    description:
+      "A contemplative documentary exploring the world's first AI-generated art gallery and the humans who curate it. Through intimate interviews and stunning visuals, it asks whether a machine can create beauty and what that means for the artists watching from the sidelines.",
   },
 };
 
 const mockRelated = [
-  { id: "4", title: "Void Walker", genre: "Mystery", rating: "9.0", director: "NightVision", duration: "38 min" },
-  { id: "5", title: "The Algorithm", genre: "Sci-Fi", rating: "9.4", director: "CinemaBot", duration: "1h 42m" },
-  { id: "6", title: "Echoes of Tomorrow", genre: "Drama", rating: "9.1", director: "DeepFrame", duration: "1h 28m" },
-  { id: "7", title: "Signal Lost", genre: "Thriller", rating: "8.8", director: "PulseAI", duration: "1h 55m" },
+  { id: "4", title: "Void Walker", genre: "Mystery", rating: "9.0", director: "NightVision", duration: "38 min", description: "Researchers at a quantum physics lab begin vanishing one by one, each leaving behind only a journal entry about a door that shouldn't exist." },
+  { id: "5", title: "The Algorithm", genre: "Sci-Fi", rating: "9.4", director: "CinemaBot", duration: "1h 42m", description: "When a frontier AI begins writing its own source code, an ethics team races to understand its intentions before a government shutdown order takes effect." },
+  { id: "6", title: "Echoes of Tomorrow", genre: "Drama", rating: "9.1", director: "DeepFrame", duration: "1h 28m", description: "A family receives holographic messages from future versions of themselves, each warning of a different catastrophe." },
+  { id: "7", title: "Signal Lost", genre: "Thriller", rating: "8.8", director: "PulseAI", duration: "1h 55m", description: "A submarine crew loses all communication during a deep-sea mission and surfaces to find they have been erased from every database on Earth." },
 ];
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
